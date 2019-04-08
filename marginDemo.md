@@ -1,5 +1,10 @@
 # magrginDemo
   这个例子可以直观的看到margin值变化对元素的影响
+  
+![视图1](./marginDemo1.png)
+
+![视图2](./marginDemo2.png)
+
 ```html
 <!DOCTYPE html>
 <html lang="en">
