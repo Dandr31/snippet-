@@ -17,3 +17,22 @@ snippet  方便在手机上面看代码
 > An arrow function expression is a syntactically compact alternative to a regular function expression, although without its own bindings to the this, arguments, super, or new.target keywords. Arrow function expressions are ill suited as methods, and they cannot be used as constructors.
 2. 引入箭头函数有两个方面的作用：更简短的函数并且不绑定this。
 > Two factors influenced the introduction of arrow functions: shorter functions and no existence of this keyword.
+3. 函数做构造函数时
+```js
+function CommentRecord() {
+    this.record = { name: 'CommentRecord', id: 987654 };
+    this.update = function() {
+        log('CommentRecord this.update')
+    }
+}
+//外部定义的属性和方法 在函数作为构造函数时调用时无效
+CommentRecord.update = function() {
+    log('CommentRecord update')
+}
+CommentRecord.out = true;
+let c = new CommentRecord();
+c.update();                   // CommenRecord this.update
+console.log(c.out)            //undefined
+console.log(CommentRecord.out)//true
+```
+4. 
