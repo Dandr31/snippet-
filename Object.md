@@ -1,5 +1,5 @@
 # Object in javaScript
-  通过《Professional JavaScript for Web Developers 3rd Edition》,《you don't know js》,MDN 较全面的理解 js Object]]
+  通过《Professional JavaScript for Web Developers 3rd Edition》,《you don't know js》,MDN 较全面的理解 js Object
 ## [Object in Professional JavaScript](./ProfessionalObject.md)
 ## [Object in you don't know js](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/README.md)
 ## [Object in mdn](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object)
