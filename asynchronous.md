@@ -3,7 +3,11 @@
 + 事件轮询机制
 + 回调函数
 + Promise
++ Generator
+    [阮一峰](http://es6.ruanyifeng.com/#docs/generator)
 + async/await
+# [深入理解ES6异步编程](http://www.ruanyifeng.com/blog/2015/04/generator.html)
+    阮一峰
 ### setTimeOut
 + 实验1
 ```js
@@ -62,3 +66,22 @@ A(function() {
 ```
 ![结果](./asyncpng/asynchronous4.png)
 ![结果](./asyncpng/asynchronous5.png)
+#### 回调函数2
+![callbackABC](./asyncpng/callbackABC1.png)
+![callbackTime](./asyncpng/callbackTime1.png)
++ 注意62行
++ 给一个耗时循环添加回调
++ 简单封装一个循环
+```js
+function loop(time, todo, callback) {
+    for (var i = 0; i < time; i++) {
+       (function (){
+        todo()
+        if (i == time - 1) {
+            callback()
+        }
+       })();
+    }
+
+}
+```
