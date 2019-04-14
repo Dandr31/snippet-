@@ -35,4 +35,4 @@ c.update();                   // CommenRecord this.update
 console.log(c.out)            //undefined
 console.log(CommentRecord.out)//true
 ```
-4. 
+4. [Polyfill](https://developer.mozilla.org/zh-CN/docs/Glossary/Polyfill)
