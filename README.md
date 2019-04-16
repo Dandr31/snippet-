@@ -36,3 +36,4 @@ console.log(c.out)            //undefined
 console.log(CommentRecord.out)//true
 ```
 4. [Polyfill](https://developer.mozilla.org/zh-CN/docs/Glossary/Polyfill)
+    Polyfill 是一块代码（通常是 Web 上的 JavaScript），用来为旧浏览器提供它没有原生支持的较新的功能。
