@@ -7,6 +7,9 @@ const regeneratorRuntime = require("../../lib/runtime");
 + 引入之后可以直接使用 **async** **await** 关键字
 ### [regenerator](https://github.com/facebook/regenerator)
     这段源码来源于 facebook
+### [comment]
++ [$Symbol.iterator](http://es6.ruanyifeng.com/#docs/iterator)
+   + 一个数据结构只要具有Symbol.iterator属性，就可以认为是“可遍历的”（iterable）。Symbol.iterator属性本身是一个函数，就是当前数据结构默认的遍历器生成函数。执行这个函数，就会返回一个遍历器。
 ### Code source
 ```js
 /**
