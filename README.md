@@ -54,7 +54,7 @@ var Thunk = function (fileName){
   };
 };
 ```
-    + [Thunk](./thunkify.md) 函数转换器
+  + [Thunk](./thunkify.md) 函数转换器
 ```js
     var Thunk = function(fn){
       return function (){
