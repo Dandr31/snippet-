@@ -1,4 +1,4 @@
-# [Thunk](http://www.ruanyifeng.com/blog/2015/05/thunk.html）阮一峰
+# [Thunk](http://www.ruanyifeng.com/blog/2015/05/thunk.html) 阮一峰
 ```js
 var fetch = require('node-fetch');
 var fs = require('fs');
