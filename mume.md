@@ -1,0 +1,59 @@
+# [mume](https://github.com/shd101wyy/mume)
+    用TypeScript写的MarkDown 转换器
+### 可以看出我的逻辑能力要比他们低很多 但实际上除了一遍遍反复练习 没有其他办法了
+### 当我写这篇文档时 明显思路很混乱
+
+## TypeScript 调试 in VS Code
+### 编译为javaScript直接调试 
+#### 1.写tsconfig.json
+```json
+{
+  "compilerOptions": {
+    "module": "commonjs",
+    "target": "es6",
+    "sourceMap": true,
+    "skipLibCheck": true,
+    "outDir": "out",
+    "lib": ["es6", "dom"],
+    "rootDir": ".",
+    "declaration": true,
+    "noUnusedLocals": true
+  },
+  "include": ["src/**/*", "test/**/*"],
+  "exclude": ["node_modules"]
+}
+```
+#### 2.编译cmd
+```
+tsc
+```
+#### 3.写lanuch.json
+```json
+{
+     "type": "node",
+     "request": "launch",
+     "name": "mpjs",
+     "program":"C:\\Users\\Thinkpad\\Desktop\\Book\\mume-master\\test\\usage\\mp.js"
+ }
+```
+1. type: node 
+2. request: launch Or attach 
+3. name 该配置名字
+4. program : 启动调试时运行的js文件地址 
+#### 4.启动调试
+
+#### 注意
+1. 如果一次设置太多断点 项目太大时就很难运行到断点位置 所以可以设置少量断点 多次调试
+2. 运行时有一个路径问题 在 mp.js中的 *filePath: Path*  **Path** 分为调试时路径 和node运行时路径
+3. **在调试状态把鼠标放在断点前 已经运行后的代码上可以查看变量值**十分智能 
+4. 使用ts-node 调试总会有莫名奇妙的错误
+
+## 代码笔记
+#### htmlExport
+1. readFile:node 的 fs 模块
+2. parseMD:将 md 文件convert为html 文件
+    + (method) MarkdownEngine.parseMD(inputString: string, options: MarkdownEngineRenderOption): Promise<MarkdownEngineOutput>
+    + transformMarkdown
+        + (alias) transformMarkdown(inputString: string, { fileDirectoryPath, projectDirectoryPath, filesCache, useRelativeFilePath, forPreview, forMarkdownExport, protocolsWhiteListRegExp, notSourceFile, imageDirectoryPath, usePandocParser, tocTable, }: TransformMarkdownOptions): Promise<TransformMarkdownOutput>import transformMarkdown
+#### parseMd
+1. 
