@@ -23,6 +23,7 @@
   "exclude": ["node_modules"]
 }
 ```
++ **sourceMap**属性和调试相关
 #### 2.编译cmd
 ```
 tsc
@@ -49,6 +50,7 @@ tsc
 4. 使用ts-node 调试总会有莫名奇妙的错误
 5. ***可以直接在typeScript上设置断点 2019-04-22***
    + ！[ts debuger](debuger/typeScript-VSC.png)
+6. 若调试时 未运行到的代码 鼠标停在上面的值是不准确的 
 ## 代码笔记
 #### htmlExport
 1. readFile:node 的 fs 模块
@@ -58,3 +60,16 @@ tsc
         + (alias) transformMarkdown(inputString: string, { fileDirectoryPath, projectDirectoryPath, filesCache, useRelativeFilePath, forPreview, forMarkdownExport, protocolsWhiteListRegExp, notSourceFile, imageDirectoryPath, usePandocParser, tocTable, }: TransformMarkdownOptions): Promise<TransformMarkdownOutput>import transformMarkdown
 #### parseMd
 1. 
+#### htmlParse----- **[cherrio.js](https://github.com/cheeriojs/cheerio/tree/master)**
+1. *$().html()* 注意本软件版本号为 *"version": "1.0.0-rc.3"* 会自动把中间的错误部分删掉
+```html
+  <html>
+      <body>
+          <html>
+            <body>
+            </body>
+          </html>
+      </body>
+  </html>
+```
+2. 我在 github 仓库得到的是 *"version": "0.22.0"*  不会删掉中间部分
