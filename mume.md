@@ -47,7 +47,8 @@ tsc
 2. 运行时有一个路径问题 在 mp.js中的 *filePath: Path*  **Path** 分为调试时路径 和node运行时路径
 3. **在调试状态把鼠标放在断点前 已经运行后的代码上可以查看变量值**十分智能 
 4. 使用ts-node 调试总会有莫名奇妙的错误
-
+5. ***可以直接在typeScript上设置断点 2019-04-22***
+   + ！[ts debuger](debuger/typeScript-VSC.png)
 ## 代码笔记
 #### htmlExport
 1. readFile:node 的 fs 模块
