@@ -50,6 +50,7 @@ tsc
 4. 使用ts-node 调试总会有莫名奇妙的错误
 5. ***可以直接在typeScript上设置断点 2019-04-22***
    + ！[ts debuger](debuger/typeScript-VSC.png)
+   + 尝试不安装 *ts-node* 也可以实现此功能 直接在 ts 文件上设置断点 2019-04-23
 6. 若调试时 未运行到的代码 鼠标停在上面的值是不准确的 
 ## 代码笔记
 #### htmlExport
@@ -61,7 +62,7 @@ tsc
 #### parseMd
 1. 
 #### htmlParse----- **[cherrio.js](https://github.com/cheeriojs/cheerio/tree/master)**
-1. *$().html()* 注意本软件版本号为 *"version": "1.0.0-rc.3"* 会自动把中间的错误部分删掉
+1. *$().html()* 注意本软件版本号为  **** *"version": "1.0.0-rc.3"* 会自动把中间的错误部分删掉
 ```html
   <html>
       <body>
@@ -72,4 +73,14 @@ tsc
       </body>
   </html>
 ```
-2. 我在 github 仓库得到的是 *"version": "0.22.0"*  不会删掉中间部分
+2. 我在 github 仓库得到的是 **master** 分支 *"version": "0.22.0"*  不会删掉中间部分 两版本依赖差别为
+```JSON
+    "dependencies": {
+    "css-select": "~1.2.0",
+    "dom-serializer": "~0.1.1",
+    "entities": "~1.1.1",
+    "htmlparser2": "^3.9.1",
+    "lodash": "^4.17.11",
+    "parse5": "^3.0.1"  //version": "0.22.0 没有应用此库
+    }
+```
