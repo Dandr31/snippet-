@@ -85,3 +85,60 @@ function loop(time, todo, callback) {
 
 }
 ```
++ 网上的一个例子
+```js
+console.log('global')
+
+setTimeout(function() {
+    console.log('timeout1')
+    new Promise(function(resolve) {
+        console.log('timeout1_promise')
+        resolve()
+    }).then(function() {
+        console.log('timeout1_then')
+    })
+}, 2000)
+
+for (var i = 0; i <= 5; i++) {
+    console.log(new Date(), 'for start', i)
+    setTimeout(function() {
+        if (i == 0) {
+            console.log('timeout 0')
+        } else {
+            console.log(new Date(), 'i has been 6 now')
+            console.log(i)
+        }
+    }, i * 1000)
+    console.log(i)
+}
+
+new Promise(function(resolve) {
+    console.log('promise1', new Date())
+    resolve()
+}).then(function() {
+    console.log('then1')
+})
+
+setTimeout(function() {
+    console.log('timeout2')
+    new Promise(function(resolve) {
+        console.log('timeout2_promise', new Date())
+        resolve()
+    }).then(function() {
+        console.log('timeout2_then')
+    })
+}, 1000)
+
+new Promise(function(resolve) {
+    console.log('promise2', new Date())
+    setTimeout(() => {
+        console.log('promise2->timeout', new Date())
+    }, 0);
+    console.log('promise2 too')
+
+    resolve()
+}).then(function() {
+    console.log('then2')
+})
+```
+![Result](javaScript\snippet-\asyncpng\async-timeout-then.png)

@@ -55,155 +55,79 @@ Note: if you're interested in another compact pub/sub implementation (0.45KB min
 Sample Pub/Sub implementation 
 ```js
 var PubSub = {};
-
-(function(p){
-
+(function(p) {
     "use strict";
-
-    
-
     var topics = {},
-
-          lastUid = -1;
-
-    
-
-    var publish = function( topic , data){
-
-        if ( !topics.hasOwnProperty( topic ) ){
-
+        lastUid = -1;
+    var publish = function(topic, data) {
+        if (!topics.hasOwnProperty(topic)) {
             return false;
-
         }
-
-        
-
-        var notify = function(){
-
+        var notify = function() {
             var subscribers = topics[topic],
-
-                throwException = function(e){
-
-                return function(){
-
-                    throw e;
-
+                throwException = function(e) {
+                    return function() {
+                        throw e;
+                    };
                 };
-
-            }; 
-
-            
-
-            for ( var i = 0, j = subscribers.length; i < j; i++ ){
-
+            for (var i = 0, j = subscribers.length; i < j; i++) {
                 try {
-
-                    subscribers[i].func( topic, data );
-
-                } catch( e ){
-
-                    setTimeout( throwException(e), 0);
-
+                    subscribers[i].func(topic, data);
+                } catch (e) {
+                    setTimeout(throwException(e), 0);
                 }
-
             }
-
         };
-
-        
-
-        setTimeout( notify , 0 );
-
+        setTimeout(notify, 0);
         return true;
-
     };
 
-    
+
 
     /**
-
      *  Publishes the topic, passing the data to it's subscribers
-
      *  @topic (String): The topic to publish
-
      *  @data: The data to pass to subscribers
-
-    **/
-
-    p.publish = function( topic, data ){
-
-        return publish( topic, data, false );
-
+     **/
+    p.publish = function(topic, data) {
+        return publish(topic, data, false);
     };
 
-    
-
     /**
-
      *  Subscribes the passed function to the passed topic. 
-
      *  Every returned token is unique and should be stored if you need to unsubscribe
-
      *  @topic (String): The topic to subscribe to
-
      *  @func (Function): The function to call when a new topic is published
+     **/
 
-    **/
-
-    p.subscribe = function( topic, func ){
-
+    p.subscribe = function(topic, func) {
         // topic is not registered yet
-
-        if ( !topics.hasOwnProperty( topic ) ){
-
+        if (!topics.hasOwnProperty(topic)) {
             topics[topic] = [];
-
         }
-
         var token = (++lastUid).toString();
-
-        topics[topic].push( { token : token, func : func } );
-
+        topics[topic].push({ token: token, func: func });
         // return token for unsubscribing
-
         return token;
-
     };
 
     /**
-
      *  Unsubscribes a specific subscriber from a specific topic using the unique token
-
      *  @token (String): The token of the function to unsubscribe
-
-    **/
-
-    p.unsubscribe = function( token ){
-
-        for ( var m in topics ){
-
-            if ( topics.hasOwnProperty( m ) ){
-
-                for ( var i = 0, j = topics[m].length; i < j; i++ ){
-
-                    if ( topics[m][i].token === token ){
-
-                        topics[m].splice( i, 1 );
-
+     **/
+    p.unsubscribe = function(token) {
+        for (var m in topics) {
+            if (topics.hasOwnProperty(m)) {
+                for (var i = 0, j = topics[m].length; i < j; i++) {
+                    if (topics[m][i].token === token) {
+                        topics[m].splice(i, 1);
                         return token;
-
                     }
-
                 }
-
             }
-
         }
-
         return false;
-
     };
-
 }(PubSub));
 ```
 ## Example 1: Basic use of publishers and subscribers
@@ -211,45 +135,24 @@ var PubSub = {};
 This could then be easily used as follows:
 ```js
 // a sample subscriber (or observer)
-
 var testSubscriber = function( topics , data ){
-
     console.log( topics + ": " + data );
-
 };
 
-
-
 // add the function to the list of subscribers to a particular topic
-
 // maintain the token (subscription instance) to enable unsubscription later
-
 var testSubscription = PubSub.subscribe( 'example1', testSubscriber );
-
-
-
 // publish a topic or message asyncronously
-
 PubSub.publish( 'example1', 'hello scriptjunkie!' );
-
 PubSub.publish( 'example1', ['test','a','b','c'] );
-
 PubSub.publish( 'example1', [{'color':'blue'},{'text':'hello'}] );
 
-
-
 // unsubscribe from further topics
-
 setTimeout(function(){
-
     PubSub.unsubscribe( testSubscription );
-
 }, 0);
 
-
-
 // test that we've fully unsubscribed
-
 PubSub.publish( 'example1', 'hello again!' );
 ```
 Real-time stock market application
@@ -266,21 +169,13 @@ In the following example, we limit our usage of pub/sub to that of a notificatio
 Note: the Mediator pattern is occasionally used to provide a level of communication between UI components without requiring that they communicate with each other directly. For example, rather than tightly coupling our applications, we can have widgets/components publish a topic when something interesting happens. A mediator can then subscribe to that topic and call the relevant methods on other components.
 ```js
 var grid = {
-
     refreshData: function(){
-
         console.log('retrieved latest data from data cache');
-
         console.log('updated grid component');
-
     },
-
     updateCounter: function(){
-
         console.log('data last updated at: ' + getCurrentTime());
-
     }    
-
 };
 
 
@@ -288,41 +183,21 @@ var grid = {
 //a very basic mediator
 
 var gridUpdate = function(topics, data){ 
-
       grid.refreshData();
-
       grid.updateCounter();
-
 }
 
-
-
-var dataSubscription = PubSub.subscribe( 'dataUpdated', gridUpdate );
-
-      
-
+var dataSubscription = PubSub.subscribe( 'dataUpdated', gridUpdate );    
 PubSub.publish( 'dataUpdated', 'new stock data available!' );
-
-
-
 PubSub.publish( 'dataUpdated', 'new stock data available!' );
-
-
 
 function getCurrentTime(){
-
     var date = new Date(),
-
           m = date.getMonth() + 1,
-
           d = date.getDate(),
-
           y = date.getFullYear(),
-
           t = date.toLocaleTimeString().toLowerCase(),
-
          return (m + '/' + d + '/' + y + ' ' + t);   
-
 }
 ```
 Whilst there's nothing terribly wrong with this, there are more optimal ways that we can utilize pub/sub to our advantage.
@@ -333,49 +208,31 @@ Rather than just notifying our subscribers that new data is available, why not a
 In addition to avoiding data having to be read from a cached store, this also avoids client-side calculation of the current time whenever a new data entry gets published.
 ```js
 var grid = {
-
     addEntry: function(data){
-
         if (data !== 'undefined') {
-
            console.log('Entry:' 
-
                        + data.title 
-
                        + ' Changenet / %' 
-
                        + data.changenet 
-
                        + '/' + data.percentage + ' % added');
-
         }
-
     },
 
     updateCounter: function(timestamp){
-
         console.log('grid last updated at: ' + timestamp);
-
     }    
-
 };
 
 
-
 var gridUpdate = function(topics, data){ 
-
         grid.addEntry(data);
-
         grid.updateCounter(data.timestamp);
-
 }
 
 
 
 var gridSubscription = PubSub.subscribe( 'dataUpdated', gridUpdate );
-
 PubSub.publish('dataUpdated',   { title: "Microsoft shares", changenet: 4, percentage: 33, timestamp: '17:34:12'  });
-
 PubSub.publish('dataUpdated',   { title: "Dell shares", changenet: 10, percentage: 20, timestamp: '17:35:16'  });
 ```
 ##Example 4: Decoupling applications using jQuery & Ben Alman's pub/sub implementation
@@ -387,65 +244,39 @@ It's left up to the subscribers to those topics to then delegate what happens wi
 HTML
 ```html
 <script id="userTemplate" type="text/x-jquery-tmpl">
-
     <li>${user}</li>
-
 </script>
 
-
-
 <script id="ratingsTemplate" type="text/x-jquery-tmpl">
-
     <li><strong>${movie}</strong> was rated ${rating}/5</li>
-
 </script>
 
 
 
 <div id="container">
-
     <div class="sampleForm">
-
         <p>
-
             <label for="twitter_handle">Twitter handle:</label>
-
             <input type="text" id="twitter_handle" />
-
         </p>
 
         <p>
-
             <label for="movie_seen">Name a movie you've seen this year:</label>
-
             <input type="text" id="movie_seen" />
-
         </p>
 
         <p>
-
             <label for="movie_rating">Rate the movie you saw:</label>
-
             <select id="movie_rating">
-
-                  <option value="1">1</option>
-
+                   <option value="1">1</option>
                    <option value="2">2</option>
-
                    <option value="3">3</option>
-
                    <option value="4">4</option>
-
                    <option value="5" selected>5</option>
-
            </select>
-
          </p>
-
          <p>
-
              <button id="add">Submit rating</button>
-
          </p>
 
      </div>
@@ -453,80 +284,42 @@ HTML
  
 
      <div class="summaryTable">
-
          <div id="users"><h3>Recent users</h3></div>
-
          <div id="ratings"><h3>Recent movies rated</h3></div>
-
      </div>
-
-     
-
  </div>
  ```
  JavaScript
  ```js
  (function($) {
 
-
-
 var movieList = [],
-
     userList  = [];
-
-    
 
 /* subscribers */
 
 $.subscribe( "/new/user", function(userName){
-
     if(userName.length){
-
         userList.push({user: userName});
-
         $( "#userTemplate" ).tmpl( userList ).appendTo( "#users" );
-
    }
-
 });
-
 
 
 $.subscribe( "/new/rating", function(movieTitle, userRating){
-
     if(movieTitle.length){
-
       movieList.push({ movie: movieTitle, rating: userRating});
-
       $( "#ratingsTemplate" ).tmpl( movieList ).appendTo( "#ratings" );
-
     }
-
 });
-
-
-
-
 
 $('#add').bind('click', function(){
-
         var strUser    = $("#twitter_handle").val(),
-
             strMovie = $("#movie_seen").val(),
-
-            strRating = $("#movie_rating").val();
-
-        
-
+            strRating = $("#movie_rating").val(); 
         $.publish('/new/user',  strUser  );
-
-        $.publish('/new/rating',  [ strMovie, strRating] );
-
-    
-
+        $.publish('/new/rating',  [ strMovie, strRating] );  
 });
-
-
 
 })(jQuery);
 ```
@@ -545,91 +338,47 @@ Notice how in our sample below, one topic notification is made when a user indic
 HTML
 ```html
 <form id="flickrSearch">
-
     <input type="text" name="tag" id="query"/>
-
     <input type="submit" name="submit" value="submit"/>
-
 </form>
 
-    
 
 <div id="lastQuery"></div>
-
-<div id="searchResults"></div>
-
-    
-
+<div id="searchResults"></div>   
 <script id="resultTemplate" type="text/x-jquery-tmpl">
-
      {{each(i, items) items}}
-
              <li><p><img src="${items.media.m}"/></p></li>
-
      {{/each}}
-
 </script>
 ```
 JavaScript
 ```js
 (function($) {
-
     $('#flickrSearch').submit(function(e){
-
         e.preventDefault();
-
         var tags = $(this).find('#query').val();
-
         if(!tags){return;}
-
         $.publish('/search/tags', [ $.trim(tags) ]);
-
-
-
     });
 
-    
-
     $.subscribe('/search/tags', function(tags){
-
         $.getJSON('http://api.flickr.com/services/feeds/photos_public.gne?jsoncallback=?', 
-
                    { tags: tags, tagmode: 'any', format: 'json'},
-
         function(data){
-
             if(!data.items.length){ return; }
-
             $.publish('/search/resultSet', [ data ]);                 
-
         });
-
     });
-
-    
 
     $.subscribe('/search/tags', function(tags){
-
         $('#searchResults').html('<p>Searched for:<strong>' + tags + '</strong></p>');
-
     });
-
-    
 
     $.subscribe('/search/resultSet', function(results){
-
         var holder = $('#searchResults');
-
         holder.html();
-
         $('#resultTemplate').tmpl(results).appendTo(holder);
-
-    });
-
-    
-
-    
-
+    });    
 })(jQuery);
 ```
 ## Conclusions
