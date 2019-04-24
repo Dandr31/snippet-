@@ -17,4 +17,4 @@ var b = require('./b.js');
 b.name = 'c.js';
 b.nameThis();
 ```
-![Result](png/exportsThis.png)
+![Result](png/exportThis.png)
