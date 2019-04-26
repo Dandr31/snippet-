@@ -6,7 +6,10 @@ snippet  方便在手机上面看代码
 ## [marginDemo](marginDemo.md)
 
 ## [colorUI](colorUI.md)
-
+## [rainmeter](https://github.com/rainmeter/rainmeter)
+    只有桌面插件 似乎不能动态桌面
+## [Wallpaper Engine](https://store.steampowered.com/app/431960/Wallpaper_Engine/)
+    动态桌面软件18块钱
 ## [spinner](SpinnerExamples.md) 
     一个用css做的加载动画
   
