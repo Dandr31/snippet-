@@ -12,7 +12,18 @@ snippet  方便在手机上面看代码
     动态桌面软件18块钱
 ## [spinner](SpinnerExamples.md) 
     一个用css做的加载动画
-  
+## [weebp](https://github.com/Francesco149/weebp)
+    free and open-source wallpaper engine. set any window or video as your wallpaper
+  + usage
+    + 下载weebp 和 mpv
+    + 通过 <code>.bat</code> 用这个办法播放时 桌面原本的壁纸轮播要关掉
+```bat
+wp run mpv --terminal=no --loop=inf "D:\weebp-0.6.1-windows-x86\audio\buzhihuo.mp4"
+wp add --wait --fullscreen --class mpv
+```
+  + [mpv](https://github.com/mpv-player/mpv)
+    + mpv is a media player based on MPlayer and mplayer2. It supports a wide variety of video file formats, audio and video codecs, and subtitle types.
+  + [download](https://mpv.srsfckn.biz/)
 ## [flex layout](http://www.ruanyifeng.com/blog/2015/07/flex-grammar.html)
     阮一峰的布局教程 他的教程脉络清晰 叙述有条理 可见真正理解 便是再难的东西也能解释得浅显易懂 
 #  Details
